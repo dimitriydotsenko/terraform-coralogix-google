@@ -26,6 +26,7 @@ Manage the `Cloud Function` that retrieves logs from `PubSub` topic and sends th
 | <a name="input_application_name"></a> [application\_name](#input\_application\_name) | The name of your application | `string` | n/a | yes |
 | <a name="input_subsystem_name"></a> [subsystem\_name](#input\_subsystem\_name) | The subsystem name of your application | `string` | `<topic-name>` | no |
 | <a name="input_newline_pattern"></a> [newline\_pattern](#input\_newline\_pattern) | The pattern for lines splitting | `string` | `(?:\r\n\|\r\|\n)` | no |
+| <a name="input_sampling"></a> [sampling](#input\_sampling) | The sampling rate for the logs. default is 1 | `number` | `1` | no |
 | <a name="input_topic"></a> [topic](#input\_topic) | The name of the PubSub topic to watch | `string` | n/a | yes |
 | <a name="input_labels"></a> [labels](#input\_labels) | A map of labels to add to Cloud Function | `map(string)` | `{}` | no |
 
