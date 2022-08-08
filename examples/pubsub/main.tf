@@ -11,6 +11,7 @@ module "pubsub" {
   application_name   = var.application_name
   subsystem_name     = var.subsystem_name
   newline_pattern    = var.newline_pattern
+  sampling           = var.sampling 
   topic              = var.topic
   labels = {
     environment = "production"

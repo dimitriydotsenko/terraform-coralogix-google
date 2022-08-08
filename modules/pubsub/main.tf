@@ -7,7 +7,7 @@ locals {
     Singapore = "api.coralogixsg.com"
     US        = "api.coralogix.us"
   }
-  coralogix_url = lookup(local.coralogix_regions, var.coralogix_region, "Europe")
+  coralogix_url = local.coralogix_regions[var.coralogix_region]
   labels = {
     provider = "coralogix"
     license  = "apache2"
@@ -43,19 +43,19 @@ resource "google_storage_bucket_object" "this" {
 resource "google_cloudfunctions_function" "this" {
   name                  = local.function_name
   description           = "Send PubSub logs to Coralogix."
-  runtime               = "python38"
+  runtime               = "nodejs14"
   available_memory_mb   = 1024
   timeout               = 60
   source_archive_bucket = google_storage_bucket_object.this.bucket
   source_archive_object = google_storage_bucket_object.this.name
-  entry_point           = "to_coralogix"
+  entry_point           = "mainPubSub"
   environment_variables = {
-    CORALOGIX_LOG_URL        = "https://${local.coralogix_url}/api/v1/logs"
-    CORALOGIX_TIME_DELTA_URL = "https://${local.coralogix_url}/sdk/v1/time"
+    CORALOGIX_URL        = local.coralogix_url
     private_key              = var.private_key
     app_name                 = var.application_name
     sub_name                 = var.subsystem_name
     newline_pattern          = var.newline_pattern
+    sampling                 = var.sampling
   }
   event_trigger {
     event_type = "google.pubsub.topic.publish"

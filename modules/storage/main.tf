@@ -7,7 +7,7 @@ locals {
     Singapore = "api.coralogixsg.com"
     US        = "api.coralogix.us"
   }
-  coralogix_url = lookup(local.coralogix_regions, var.coralogix_region, "Europe")
+  coralogix_url = local.coralogix_regions[var.coralogix_region]
   labels = {
     provider = "coralogix"
     license  = "apache2"

@@ -37,6 +37,12 @@ variable "newline_pattern" {
   default     = "(?:\\r\\n|\\r|\\n)"
 }
 
+variable "sampling" {
+  description = "The sampling rate for the logs. default is 1"
+  type        = number
+  default     = 1
+}
+
 variable "topic" {
   description = "The name of the PubSub topic to watch"
   type        = string
