@@ -1,44 +1,31 @@
-
-### [NOTICE] This repo is being deprecated in favor of the [gcp-logs](https://coralogix.com/docs/integrations/gcp/gcp-logs/) pull integration.
-
-Please use the new integration for all new gcp logs integrations. [terraform-provider-coralogix](https://github.com/coralogix/terraform-provider-coralogix) provides `coralogix_integration` resource for this. Runtime support for [nodejs14](https://cloud.google.com/functions/docs/runtime-support#node.js) on Cloud Run Functions will decommision soon.
-
 # GCP Coralogix Terraform module
 
-## Usage
+## Modules
 
-`pubsub`:
+### `gcs-archive`
+
+Provision GCS buckets for Coralogix archive storage with IAM permissions and optional CMEK encryption.
 
 ```hcl
-module "pubsub" {
-  source = "coralogix/google/coralogix//modules/pubsub"
+module "gcs-archive" {
+  source = "coralogix/google/coralogix//modules/v2/gcs-archive"
 
-  coralogix_region = "Europe"
-  private_key      = "2f55c873-c0cf-4523-82d4-c3b68ee6cb46"
-  application_name = "Pub/Sub"
-  subsystem_name   = "logs"
-  bucket           = "test-topic-name"
+  gcp_region                = "us-central1"
+  coralogix_service_account = "coralogix-archive@your-cx-project.iam.gserviceaccount.com"
+  logs_bucket_name          = "my-coralogix-logs-archive"
+  metrics_bucket_name       = "my-coralogix-metrics-archive"
 }
 ```
 
-`storage`:
-
-```hcl
-module "storage" {
-  source = "coralogix/google/coralogix//modules/storage"
-
-  coralogix_region = "Europe"
-  private_key      = "2f55c873-c0cf-4523-82d4-c3b68ee6cb46"
-  application_name = "GCS"
-  subsystem_name   = "logs"
-  bucket           = "test-bucket-name"
-}
-```
+See the [gcs-archive module](https://github.com/coralogix/terraform-coralogix-google/tree/master/modules/v2/gcs-archive) for full documentation.
 
 ## Examples
 
-- [pubsub](https://github.com/coralogix/terraform-coralogix-google/tree/master/examples/pubsub) - Send logs from `PubSub` topic.
-- [storage](https://github.com/coralogix/terraform-coralogix-google/tree/master/examples/storage) - Send logs from `GCS` bucket.
+- [gcs-archive](https://github.com/coralogix/terraform-coralogix-google/tree/master/examples/gcs-archive) - Provision GCS archive buckets for Coralogix.
+
+## Deprecated v1 Modules
+
+The v1 modules (`pubsub` and `storage`) are deprecated. See [modules/README.md](https://github.com/coralogix/terraform-coralogix-google/tree/master/modules/README.md) for details.
 
 ## Authors
 
